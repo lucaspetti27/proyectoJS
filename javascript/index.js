@@ -1,22 +1,44 @@
-alert ("Bienvenido! a continuacion vas a poder solicitar tu tarjeta de credito. Haz click en aceptar para continuar");
+var usuarios = [];
 
-let bancoTarjeta= prompt ("Cual tarjeta desea solicitar? Visa o Mastercard?");
+class Usuario {
+    constructor (nombre, apellido){
+        this.nombre= nombre;
+        this.apellido= apellido;
+        this.tarjetas= [];
+    }
+}
+class Tarjeta {
+    constructor (banco,marca) {
+        this.banco= banco
+        this.marca = marca
+    }
+}
+function crearUsuario (){
+    let nombre= prompt ("Ingrese su nombre")
+    let apellido = prompt ("Ingrese su apellido")
+    let usuario = new Usuario(nombre,apellido);
+    usuarios.push(usuario);
+    let banco = prompt("Ingrese el banco al cual pertenece su tarjeta")
+    let marca = prompt("Ingrese la marca de su tarjeta","Mastercard,Visa");
+    let tarjetaCred = new Tarjeta(banco,marca);
+    usuario.tarjetas.push(tarjetaCred)
+    let agregarTarjeta = confirm("Desea agregar otra tarjeta?");
+    while (agregarTarjeta){
+        banco = prompt("Ingrese el banco al cual pertenece su tarjeta")
+        marca = prompt("Ingrese la marca de su tarjeta","Mastercard,Visa");
+        tarjetaCred = new Tarjeta(banco,marca);
+        usuario.tarjetas.push(tarjetaCred)
+        agregarTarjeta= confirm("Desea agregar otra?")
+    }
+}
 
-if (bancoTarjeta == "Visa" || bancoTarjeta == "Mastercard" ) {
-    let correo= prompt ("Ingrese su correo electronico para ser notificado");
-    while(correo == ""){
-        correo= prompt("Porfavor, ingrese un correo valido")
-        }
-    alert ("Muchas gracias, su solicitud esta en proceso. Cuando su tarjeta " +bancoTarjeta+ " este lista sera notificado a su correo: "+correo);
-} else {
-    while (bancoTarjeta != "Visa" || bancoTarjeta != "Mastercard"){
-        bancoTarjeta = prompt("El nombre es incorrecto, porfavor seleccione una opcion valida: Visa o Mastercard");
-        if (bancoTarjeta == "Visa" || bancoTarjeta == "Mastercard") {
-            let correo= prompt ("Ingrese su correo electronico para ser notificado");
-            while(correo == ""){
-            correo= prompt("Porfavor, ingrese un correo valido")
-            }
-            alert ("Muchas gracias, su solicitud esta en proceso. Cuando su tarjeta " +bancoTarjeta+ " este lista sera notificado a su correo: "+correo);
-            } 
-    };  
-};
+
+alert ("Bienvenido, a continuacion debera crear su usuario:")
+crearUsuario();
+let generadorDeUsuarios= confirm("Desea crear otro usuario?");
+while (generadorDeUsuarios){
+    crearUsuario();
+    generadorDeUsuarios= confirm("Desea crear otro usuario?");
+}
+alert("Tu proceso de registro termino. Podes ver los datos cargados en el console.log")
+console.log (usuarios);
